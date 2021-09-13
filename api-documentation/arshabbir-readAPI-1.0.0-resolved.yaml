@@ -1,0 +1,78 @@
+---
+swagger: "2.0"
+info:
+  description: API for reading single & bulk Events
+  version: 1.0.0
+  title: Event reading API
+host: testhost:30007
+basePath: /v1
+schemes:
+- http
+security:
+- UserSecurity: []
+paths:
+  /read:
+    get:
+      description: Returns a list of events
+      parameters: []
+      responses:
+        "200":
+          description: Successfully returned a list of events
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/inline_response_200'
+        "500":
+          description: Internal system error
+          schema:
+            $ref: '#/definitions/inline_response_500'
+  /read/{empid}:
+    get:
+      description: Obtain information about an single event from  unique empid
+      parameters:
+      - name: empid
+        in: path
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Successfully returned an Event
+          schema:
+            $ref: '#/definitions/inline_response_200_1'
+        "500":
+          description: Internal system error
+          schema:
+            $ref: '#/definitions/inline_response_500'
+securityDefinitions:
+  UserSecurity:
+    type: basic
+definitions:
+  inline_response_200_1:
+    type: object
+    properties:
+      name:
+        type: string
+      empid:
+        type: string
+      dept:
+        type: string
+      timestamp:
+        type: string
+  inline_response_200:
+    type: object
+    properties:
+      name:
+        type: string
+      dept:
+        type: string
+      empid:
+        type: string
+      timestamp:
+        type: string
+  inline_response_500:
+    type: object
+    properties:
+      message:
+        type: string
+      status:
+        type: string
